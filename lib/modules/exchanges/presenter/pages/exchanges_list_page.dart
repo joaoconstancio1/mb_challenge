@@ -42,7 +42,7 @@ class ExchangesListView extends StatelessWidget {
               ),
               title: Text(exchange.name ?? ''),
               subtitle: Text(
-                'Volume: \$${exchange.spotVolumeUsd}\nLaunched: ${exchange.dateLaunched}',
+                'Volume: \$${exchange.spotVolumeUsd}\nLaunched: ${exchange.formattedDateLaunched}',
               ),
               onTap: () async {
                 Navigator.push(

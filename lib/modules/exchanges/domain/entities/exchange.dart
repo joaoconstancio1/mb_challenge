@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:intl/intl.dart';
 
 class Exchange extends Equatable {
   final int? id;
@@ -64,6 +65,16 @@ class Exchange extends Equatable {
     this.offRampDirectWithdrawal,
     this.offRampP2p,
   });
+
+  String get formattedDateLaunched {
+    if (dateLaunched == null || dateLaunched!.isEmpty) return '-';
+    try {
+      final dt = DateTime.parse(dateLaunched!);
+      return DateFormat('dd/MM/yyyy').format(dt);
+    } catch (_) {
+      return '-';
+    }
+  }
 
   @override
   List<Object?> get props => [

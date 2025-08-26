@@ -17,20 +17,28 @@ class ExchangesRemoteDataSourceImpl implements ExchangesRemoteDataSource {
 
   @override
   Future<ExchangeModel> getExchange(int id) async {
-    final data = await httpClient.get(
-      '$baseUrl/v1/exchange/info',
-      queryParameters: {'id': id},
-    );
-    return ExchangeModel.fromJson(data['data'][id.toString()]);
+    try {
+      final data = await httpClient.get(
+        '$baseUrl/v1/exchange/info',
+        queryParameters: {'id': id},
+      );
+      return ExchangeModel.fromJson(data['data'][id.toString()]);
+    } catch (e) {
+      rethrow;
+    }
   }
 
   @override
   Future<List<CurrencyModel>> getExchangeCurrencies(int id) async {
-    final data = await httpClient.get(
-      '$baseUrl/v1/exchange/assets',
-      queryParameters: {'id': id},
-    );
-    final list = data['data'] as List;
-    return list.map((e) => CurrencyModel.fromJson(e)).toList();
+    try {
+      final data = await httpClient.get(
+        '$baseUrl/v1/exchange/assets',
+        queryParameters: {'id': id},
+      );
+      final list = data['data'] as List;
+      return list.map((e) => CurrencyModel.fromJson(e)).toList();
+    } catch (e) {
+      rethrow;
+    }
   }
 }
