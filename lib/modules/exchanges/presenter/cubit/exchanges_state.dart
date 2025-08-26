@@ -7,11 +7,11 @@ class ExchangeInitial extends ExchangeState {}
 
 class ExchangeLoading extends ExchangeState {}
 
-class ExchangeLoaded extends ExchangeState {
-  final Exchange exchange;
-  final List<Currency> assets;
+class ExchangesLoaded extends ExchangeState {
+  final List<Exchange> exchanges;
+  final List<List<Currency>> assetsList;
 
-  ExchangeLoaded(this.exchange, {this.assets = const []});
+  ExchangesLoaded(this.exchanges, {this.assetsList = const []});
 }
 
 class ExchangeError extends ExchangeState {

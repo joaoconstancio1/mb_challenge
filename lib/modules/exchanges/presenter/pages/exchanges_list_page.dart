@@ -14,7 +14,7 @@ class ExchangesListPage extends StatelessWidget {
     return BlocProvider(
       create: (context) =>
           ExchangeCubit(repository: GetIt.I<ExchangeRepository>())
-            ..getExchange(),
+            ..getExchanges(),
       child: const ExchangesListView(),
     );
   }
@@ -31,26 +31,37 @@ class ExchangesListView extends StatelessWidget {
         builder: (context, state) {
           if (state is ExchangeLoading) {
             return const Center(child: CircularProgressIndicator());
-          } else if (state is ExchangeLoaded) {
-            final exchange = state.exchange;
-            final assets = state.assets;
-            return ListTile(
-              leading: Image.network(
-                exchange.logo ?? '',
-                width: 40,
-                height: 40,
-              ),
-              title: Text(exchange.name ?? ''),
-              subtitle: Text(
-                'Volume: \$${exchange.spotVolumeUsd}\nLaunched: ${exchange.formattedDateLaunched}',
-              ),
-              onTap: () async {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) =>
-                        ExchangeDetailPage(exchange: exchange, assets: assets),
+          } else if (state is ExchangesLoaded) {
+            final exchanges = state.exchanges;
+            final assetsList = state.assetsList;
+
+            return ListView.builder(
+              itemCount: exchanges.length,
+              itemBuilder: (context, index) {
+                final exchange = exchanges[index];
+                final assets = assetsList[index];
+
+                return ListTile(
+                  leading: Image.network(
+                    exchange.logo ?? '',
+                    width: 40,
+                    height: 40,
                   ),
+                  title: Text(exchange.name ?? ''),
+                  subtitle: Text(
+                    'Volume: \$${exchange.spotVolumeUsd}\nLaunched: ${exchange.formattedDateLaunched}',
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => ExchangeDetailPage(
+                          exchange: exchange,
+                          assets: assets,
+                        ),
+                      ),
+                    );
+                  },
                 );
               },
             );
