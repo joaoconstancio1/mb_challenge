@@ -1,4 +1,5 @@
-import 'package:dio/dio.dart';
+import 'package:mb_challenge/core/network/custom_http_client.dart';
+import 'package:mb_challenge/core/utils/constants.dart';
 import '../models/exchange_model.dart';
 import '../models/currency_model.dart';
 
@@ -8,48 +9,28 @@ abstract class ExchangesRemoteDataSource {
 }
 
 class ExchangesRemoteDataSourceImpl implements ExchangesRemoteDataSource {
-  final Dio _dio;
+  final CustomHttpClient httpClient;
 
-  ExchangesRemoteDataSourceImpl(this._dio);
+  ExchangesRemoteDataSourceImpl({required this.httpClient});
 
-  final baseUrl = 'https://pro-api.coinmarketcap.com';
+  final String baseUrl = Constants.baseUrl;
 
   @override
   Future<ExchangeModel> getExchange(int id) async {
-    try {
-      final response = await _dio.get(
-        '$baseUrl/v1/exchange/info?id=$id',
-        options: Options(
-          headers: {
-            'X-CMC_PRO_API_KEY': '9706ea51-5750-42ef-88ec-03c5ba978bf8',
-          },
-        ),
-      );
-
-      return ExchangeModel.fromJson(response.data['data'][id.toString()]);
-    } catch (e) {
-      rethrow;
-    }
+    final data = await httpClient.get(
+      '$baseUrl/v1/exchange/info',
+      queryParameters: {'id': id},
+    );
+    return ExchangeModel.fromJson(data['data'][id.toString()]);
   }
 
   @override
   Future<List<CurrencyModel>> getExchangeCurrencies(int id) async {
-    try {
-      final url = '$baseUrl/v1/exchange/assets?id=$id';
-
-      final response = await _dio.get(
-        url,
-        options: Options(
-          headers: {
-            'X-CMC_PRO_API_KEY': '9706ea51-5750-42ef-88ec-03c5ba978bf8',
-          },
-        ),
-      );
-
-      final data = response.data['data'] as List;
-      return data.map((e) => CurrencyModel.fromJson(e)).toList();
-    } catch (e) {
-      rethrow;
-    }
+    final data = await httpClient.get(
+      '$baseUrl/v1/exchange/assets',
+      queryParameters: {'id': id},
+    );
+    final list = data['data'] as List;
+    return list.map((e) => CurrencyModel.fromJson(e)).toList();
   }
 }

@@ -1,5 +1,5 @@
 import 'package:get_it/get_it.dart';
-import 'package:dio/dio.dart';
+import 'package:mb_challenge/core/network/custom_http_client.dart';
 import 'package:mb_challenge/modules/exchanges/presenter/cubit/exchanges_cubit.dart';
 import 'data/datasources/exchanges_remote_datasource.dart';
 import 'data/repositories/exchanges_repository_impl.dart';
@@ -10,7 +10,8 @@ Future<void> initExchangesModule() async {
 
   if (!getIt.isRegistered<ExchangesRemoteDataSource>()) {
     getIt.registerLazySingleton<ExchangesRemoteDataSource>(
-      () => ExchangesRemoteDataSourceImpl(getIt<Dio>()),
+      () =>
+          ExchangesRemoteDataSourceImpl(httpClient: getIt<CustomHttpClient>()),
     );
 
     getIt.registerLazySingleton<ExchangeRepository>(
