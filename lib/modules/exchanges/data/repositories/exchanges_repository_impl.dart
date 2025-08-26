@@ -1,3 +1,5 @@
+import 'package:mb_challenge/modules/exchanges/domain/entities/currency.dart';
+
 import '../../domain/entities/exchange.dart';
 import '../../domain/repositories/exchanges_repository.dart';
 import '../datasources/exchanges_remote_datasource.dart';
@@ -12,8 +14,8 @@ class ExchangesRepositoryImpl implements ExchangeRepository {
     return remoteDataSource.getExchange(id);
   }
 
-  // @override
-  // Future<Exchange> getExchangeDetail(int id) {
-  //   return remoteDataSource.getExchangeAssets(id);
-  // }
+  @override
+  Future<List<Currency>> getExchangeAssets(int id) {
+    return remoteDataSource.getExchangeCurrencies(id);
+  }
 }

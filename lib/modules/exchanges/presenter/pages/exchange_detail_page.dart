@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:mb_challenge/modules/exchanges/domain/entities/exchange.dart';
+import 'package:mb_challenge/modules/exchanges/domain/entities/currency.dart';
 
 class ExchangeDetailPage extends StatelessWidget {
   final Exchange exchange;
+  final List<Currency> assets; // lista de moedas passada por argumento
 
-  const ExchangeDetailPage({super.key, required this.exchange});
+  const ExchangeDetailPage({
+    super.key,
+    required this.exchange,
+    this.assets = const [],
+  });
 
   Widget _buildInfoRow(String label, String? value) {
     return Padding(
@@ -90,37 +96,41 @@ class ExchangeDetailPage extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 16),
-            // if ((exchange.coins ?? []).isNotEmpty)
-            //   Card(
-            //     elevation: 2,
-            //     margin: const EdgeInsets.symmetric(vertical: 8),
-            //     child: Padding(
-            //       padding: const EdgeInsets.all(12),
-            //       child: Column(
-            //         crossAxisAlignment: CrossAxisAlignment.start,
-            //         children: [
-            //           const Text(
-            //             'Coins',
-            //             style: TextStyle(
-            //                 fontSize: 18, fontWeight: FontWeight.bold),
-            //           ),
-            //           const Divider(),
-            //           ...exchange.coins!.map((coin) => Padding(
-            //                 padding: const EdgeInsets.symmetric(vertical: 4),
-            //                 child: Row(
-            //                   mainAxisAlignment:
-            //                       MainAxisAlignment.spaceBetween,
-            //                   children: [
-            //                     Text(coin.name),
-            //                     Text('\$${coin.priceUsd.toStringAsFixed(2)}'),
-            //                   ],
-            //                 ),
-            //               )),
-            //         ],
-            //       ),
-            //     ),
-            //   ),
+            if (assets.isNotEmpty)
+              Card(
+                elevation: 2,
+                margin: const EdgeInsets.symmetric(vertical: 8),
+                child: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Coins',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const Divider(),
+                      ...assets.map(
+                        (coin) => Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(coin.name ?? '-'),
+                              Text(
+                                '\$${coin.priceUsd?.toStringAsFixed(4) ?? '-'}',
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
           ],
         ),
       ),

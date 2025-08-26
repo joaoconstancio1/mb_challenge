@@ -32,8 +32,8 @@ class ExchangesListView extends StatelessWidget {
           if (state is ExchangeLoading) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is ExchangeLoaded) {
-            final exchange =
-                state.exchange; // supondo que ExchangeLoaded tenha uma lista
+            final exchange = state.exchange;
+            final assets = state.assets;
             return ListTile(
               leading: Image.network(
                 exchange.logo ?? '',
@@ -44,11 +44,12 @@ class ExchangesListView extends StatelessWidget {
               subtitle: Text(
                 'Volume: \$${exchange.spotVolumeUsd}\nLaunched: ${exchange.dateLaunched}',
               ),
-              onTap: () {
+              onTap: () async {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => ExchangeDetailPage(exchange: exchange),
+                    builder: (_) =>
+                        ExchangeDetailPage(exchange: exchange, assets: assets),
                   ),
                 );
               },

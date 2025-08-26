@@ -12,7 +12,8 @@ class ExchangeCubit extends Cubit<ExchangeState> {
     emit(ExchangeLoading());
     try {
       final exchange = await repository.getExchange(id);
-      emit(ExchangeLoaded(exchange));
+      final assets = await repository.getExchangeAssets(id);
+      emit(ExchangeLoaded(exchange, assets: assets));
     } catch (e) {
       emit(ExchangeError(e.toString()));
     }
