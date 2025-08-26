@@ -9,15 +9,25 @@ class ExchangeModel extends Exchange {
     super.description,
     super.dateLaunched,
     super.notice,
-    super.countries,
     super.fiats,
-    super.tags,
     super.type,
     super.makerFee,
     super.takerFee,
     super.weeklyVisits,
     super.spotVolumeUsd,
     super.spotVolumeLastUpdated,
+    super.urls,
+    super.porSwitch,
+    super.porStatus,
+    super.porAuditStatus,
+    super.walletSourceStatus,
+    super.isHidden,
+    super.isRedistributable,
+    super.onRampDirectDeposit,
+    super.onRampCardVisaMastercard,
+    super.onRampGoogleApplePay,
+    super.onRampThirdParty,
+    super.offRampDirectWithdrawal,
   });
 
   factory ExchangeModel.fromJson(Map<String, dynamic> json) {
@@ -29,9 +39,7 @@ class ExchangeModel extends Exchange {
       description: json['description'],
       dateLaunched: json['date_launched'],
       notice: json['notice'],
-      countries: (json['countries'] as List<dynamic>? ?? []).cast<String>(),
       fiats: (json['fiats'] as List<dynamic>? ?? []).cast<String>(),
-      tags: (json['tags'] as List<dynamic>?)?.cast<String>(),
       type: json['type'],
       makerFee: (json['maker_fee'] != null)
           ? (json['maker_fee'] as num).toDouble()
@@ -44,6 +52,40 @@ class ExchangeModel extends Exchange {
           ? (json['spot_volume_usd'] as num).toDouble()
           : null,
       spotVolumeLastUpdated: json['spot_volume_last_updated'],
+      urls: json['urls'] != null ? UrlsModel.fromJson(json['urls']) : null,
+      porSwitch: json['por_switch'],
+      porStatus: json['porStatus'],
+      porAuditStatus: json['porAuditStatus'],
+      walletSourceStatus: json['walletSourceStatus'],
+      isHidden: json['is_hidden'],
+      isRedistributable: json['is_redistributable'],
+      onRampDirectDeposit: json['on_ramp_direct_deposit'],
+      onRampCardVisaMastercard: json['on_ramp_card_visa_mastercard'],
+      onRampGoogleApplePay: json['on_ramp_google_apple_pay'],
+      onRampThirdParty: json['on_ramp_third_party'],
+      offRampDirectWithdrawal: json['off_ramp_direct_withdrawal'],
+    );
+  }
+}
+
+class UrlsModel extends Urls {
+  UrlsModel({
+    super.actual,
+    super.fee,
+    super.register,
+    super.twitter,
+    super.chat,
+    super.website,
+  });
+
+  factory UrlsModel.fromJson(Map<String, dynamic> json) {
+    return UrlsModel(
+      actual: (json['actual'] as List<dynamic>?)?.cast<String>(),
+      fee: (json['fee'] as List<dynamic>?)?.cast<String>(),
+      register: (json['register'] as List<dynamic>?)?.cast<String>(),
+      twitter: (json['twitter'] as List<dynamic>?)?.cast<String>(),
+      chat: (json['chat'] as List<dynamic>?)?.cast<String>(),
+      website: (json['website'] as List<dynamic>?)?.cast<String>(),
     );
   }
 }

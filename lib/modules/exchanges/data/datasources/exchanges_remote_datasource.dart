@@ -24,10 +24,9 @@ class ExchangesRemoteDataSourceImpl implements ExchangesRemoteDataSource {
           },
         ),
       );
-      print(response.data);
+
       return ExchangeModel.fromJson(response.data['data'][id.toString()]);
     } catch (e) {
-      print('Error fetching exchange: $e');
       rethrow;
     }
   }
