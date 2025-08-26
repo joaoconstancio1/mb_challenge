@@ -1,5 +1,4 @@
 import 'package:mb_challenge/core/network/custom_http_client.dart';
-import 'package:mb_challenge/core/utils/constants.dart';
 import '../models/exchange_model.dart';
 import '../models/currency_model.dart';
 
@@ -13,13 +12,11 @@ class ExchangesRemoteDataSourceImpl implements ExchangesRemoteDataSource {
 
   ExchangesRemoteDataSourceImpl({required this.httpClient});
 
-  final String baseUrl = Constants.baseUrl;
-
   @override
   Future<ExchangeModel> getExchange(int id) async {
     try {
       final data = await httpClient.get(
-        '$baseUrl/v1/exchange/info',
+        '/v1/exchange/info',
         queryParameters: {'id': id},
       );
       return ExchangeModel.fromJson(data['data'][id.toString()]);
@@ -32,7 +29,7 @@ class ExchangesRemoteDataSourceImpl implements ExchangesRemoteDataSource {
   Future<List<CurrencyModel>> getExchangeCurrencies(int id) async {
     try {
       final data = await httpClient.get(
-        '$baseUrl/v1/exchange/assets',
+        '/v1/exchange/assets',
         queryParameters: {'id': id},
       );
       final list = data['data'] as List;
