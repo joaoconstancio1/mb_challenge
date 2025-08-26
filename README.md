@@ -42,4 +42,12 @@ flutter run
 
 ## Screenshots
 
+<table>
+  <tr>
+    <td><img src="https://github.com/user-attachments/assets/5a90dc29-f154-4c9c-8a2b-5323abdd12b3" width="200"/></td>
+    <td><img src="https://github.com/user-attachments/assets/208c51ec-0043-4b7b-bfaa-277e446b6c35" width="200"/></td>
+    <td><img src="https://github.com/user-attachments/assets/e2206e1b-a128-46ad-9f5a-25cada1cddaa" width="200"/></td>
+  </tr>
+</table>
+
 
