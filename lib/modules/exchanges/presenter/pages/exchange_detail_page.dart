@@ -113,18 +113,26 @@ class ExchangeDetailPage extends StatelessWidget {
                         ),
                       ),
                       const Divider(),
-                      ...assets.map(
-                        (coin) => Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 4),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(coin.name ?? '-'),
-                              Text(
-                                '\$${coin.priceUsd?.toStringAsFixed(4) ?? '-'}',
+                      SizedBox(
+                        height: 400,
+                        child: ListView.builder(
+                          itemCount: assets.length,
+                          itemBuilder: (context, index) {
+                            final coin = assets[index];
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 4),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(coin.name ?? '-'),
+                                  Text(
+                                    '\$${coin.priceUsd?.toStringAsFixed(4) ?? '-'}',
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
+                            );
+                          },
                         ),
                       ),
                     ],
