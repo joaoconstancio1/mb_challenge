@@ -44,8 +44,13 @@ class ExchangeDetailPage extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 40,
-                    backgroundImage: NetworkImage(exchange.logo ?? ''),
                     backgroundColor: Colors.transparent,
+                    child: Image.network(
+                      exchange.logo ?? '',
+                      errorBuilder: (_, __, ___) => const Icon(Icons.image),
+                      width: 40,
+                      height: 40,
+                    ),
                   ),
                   const SizedBox(height: 8),
                   Text(

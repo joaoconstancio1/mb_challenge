@@ -42,10 +42,15 @@ class ExchangesListView extends StatelessWidget {
                 final assets = assetsList[index];
 
                 return ListTile(
-                  leading: Image.network(
-                    exchange.logo ?? '',
-                    width: 40,
-                    height: 40,
+                  leading: CircleAvatar(
+                    radius: 40,
+                    backgroundColor: Colors.transparent,
+                    child: Image.network(
+                      exchange.logo ?? '',
+                      errorBuilder: (_, __, ___) => const Icon(Icons.image),
+                      width: 40,
+                      height: 40,
+                    ),
                   ),
                   title: Text(exchange.name ?? ''),
                   subtitle: Text(
