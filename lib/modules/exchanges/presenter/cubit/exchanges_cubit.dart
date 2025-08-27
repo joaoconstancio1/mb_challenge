@@ -9,7 +9,7 @@ class ExchangeCubit extends Cubit<ExchangeState> {
 
   ExchangeCubit({required this.repository}) : super(ExchangeInitial());
 
-  final List<int> exchangeIds = [3, 270, 50, 24, 267];
+  final List<int> exchangeIds = [270, 50, 24, 267];
 
   Future<void> getExchanges() async {
     emit(ExchangeLoading());
