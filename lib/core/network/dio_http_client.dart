@@ -3,15 +3,17 @@ import 'package:mb_challenge/core/network/custom_http_client.dart';
 import 'package:mb_challenge/core/utils/constants.dart';
 
 class DioHttpClient implements CustomHttpClient {
-  final Dio _dio;
+  DioHttpClient({Dio? dio})
+    : _dio =
+          dio ??
+          Dio(
+            BaseOptions(
+              baseUrl: Constants.baseUrl,
+              headers: {'X-CMC_PRO_API_KEY': Constants.cmcApiKey},
+            ),
+          );
 
-  DioHttpClient()
-    : _dio = Dio(
-        BaseOptions(
-          baseUrl: Constants.baseUrl,
-          headers: {'X-CMC_PRO_API_KEY': Constants.cmcApiKey},
-        ),
-      );
+  final Dio _dio;
 
   @override
   Future<Map<String, dynamic>> get(
